@@ -3,7 +3,7 @@
   (define p (popen "echo test"))
   (let ((l (read-line p)))
     (test "test" l))
-  (pclose p)
+  (test #t (pclose p))
 )
 (test-exit)
 
