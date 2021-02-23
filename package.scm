@@ -10,5 +10,5 @@
  (test           "test.scm")
 
  (library
-     (name (cyclone sys popen))
+     (name (cyclone io popen))
    (description "Process I/O library")))

@@ -1,4 +1,4 @@
-(import (scheme base) (popen) (cyclone test))
+(import (scheme base) (cyclone io popen) (cyclone test))
 (test-group "popen"
   (define p (popen "echo test"))
   (let ((l (read-line p)))

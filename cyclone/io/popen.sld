@@ -1,7 +1,7 @@
 ;;;;
 ;;;; Cyclone Scheme interface to the POSIX popen functions
 ;;;;
-(define-library (popen)
+(define-library (cyclone io popen)
   (import 
     (scheme base)
     (scheme write)
