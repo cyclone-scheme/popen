@@ -13,7 +13,8 @@
     open-input-pipe
     close-pipe-port
     with-input-from-pipe
-    read-all-from-pipe)
+    read-all-from-pipe
+    read-lines-from-pipe)
   (begin
 
     (define-c popen
@@ -47,10 +48,25 @@
         (close-pipe-port proc-port)
         result))
 
+    ;; Read everything as Scheme objects
     (define (read-all-from-pipe cmd)
       (with-input-from-pipe
        cmd
        (lambda ()
          (read-all (current-input-port)))))
+
+    ;; Read everything from pipe as strings
+    (define (read-lines-from-pipe cmd)
+      (with-input-from-pipe
+       cmd
+       (lambda ()
+         (let loop ((result '()))
+           (define str (read-line (current-input-port)))
+           (cond
+             ((eof-object? str)
+              (reverse result))
+             (else
+              (loop (cons str result))))))))
+
   )
 )
