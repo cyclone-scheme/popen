@@ -4,11 +4,16 @@
 (define-library (cyclone io popen)
   (import 
     (scheme base)
+    (scheme read)
     (scheme write)
     (cyclone foreign))
   (export
     popen
-    pclose)
+    pclose
+    open-input-pipe
+    close-pipe-port
+    with-input-from-pipe
+    read-all-from-pipe)
   (begin
 
     (define-c popen
@@ -29,5 +34,23 @@
         port_type *p = port;
         pclose(p->fp);
         return_closcall1(data, k, boolean_t);")
+
+    (define open-input-pipe popen)
+
+    (define close-pipe-port pclose)
+
+    (define (with-input-from-pipe cmd thunk)
+      (let* ((proc-port (open-input-pipe cmd))
+             (result (parameterize
+                         ((current-input-port proc-port))
+                       (thunk))))
+        (close-pipe-port proc-port)
+        result))
+
+    (define (read-all-from-pipe cmd)
+      (with-input-from-pipe
+       cmd
+       (lambda ()
+         (read-all (current-input-port)))))
   )
 )
