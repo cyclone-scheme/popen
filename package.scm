@@ -1,6 +1,6 @@
 (package
  (name           popen)
- (version        0.3)
+ (version        0.3.0)
  (license        "MIT")
  (authors        "Justin Ethier")
  (maintainers    "Justin Ethier <justin.ethier at gmail dot com>")
